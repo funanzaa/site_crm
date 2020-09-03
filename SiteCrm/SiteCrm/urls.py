@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomePage, name="home"),
     path('login/', views.loginPage, name="login"),
-    # path('crm/', include('crm.urls')),
+    path('crm/', include('crm.urls')),
 ]
