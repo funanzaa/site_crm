@@ -11,16 +11,16 @@ class Project(models.Model):
 class Project_subgroup(models.Model):
     name = models.CharField(max_length=255)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    
+
     def __str__(self):
-        return self.name 
+        return self.name
 
 class Hospitals(models.Model):
     code = models.CharField(max_length=255)
     label = models.CharField(max_length=255)
     h_type = models.CharField(max_length=255)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    
+
     def __str__(self):
         return self.code + " : " + self.label
 
