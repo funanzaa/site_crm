@@ -20,4 +20,6 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomePage.as_view(), name="home"),
+    path('login/', views.LoginPage.as_view(), name="login"),
+    # path('crm/', include('crm.urls')),
 ]
