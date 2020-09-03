@@ -28,7 +28,7 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
-      <form method="post">
+      <form method="POST" >
       {% csrf_token %}
         <div class="input-group mb-3">
           <input type="text" class="form-control" placeholder="Username" name="username">
@@ -52,11 +52,11 @@
       </form>
     </div>
         <!-- {% for message in messages %}
-            {% if message.tags == 'error' %}
-            <p class="login-box-msg" style="color: crimson;"> {{ message }} </p> -->
-            <!-- <div class="card-body login-card-body" style="margin-top:10px"> {{ message }}</div> -->
-            <!-- {% endif %}
-        {% endfor %} -->
+					<p class="login-box-msg" style="color: crimson;" >{{message} }</p>
+				{% endfor %} -->
+        {% for message in messages %}
+					<p id="messages" class="login-box-msg" style="color: crimson;" >{{message}}</p>
+				{% endfor %}
     <!-- /.login-card-body -->
   </div>
 </div>
