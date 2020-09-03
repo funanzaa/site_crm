@@ -8,6 +8,13 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+class Project_subgroup(models.Model):
+    name = models.CharField(max_length=255)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    
+    def __str__(self):
+        return self.name 
+
 class Hospitals(models.Model):
     code = models.CharField(max_length=255)
     label = models.CharField(max_length=255)
@@ -33,12 +40,14 @@ class Service(models.Model):
 class Case(models.Model):
     name = models.CharField(max_length=255)
     project = models.ForeignKey(Project, null=True,on_delete= models.SET_NULL)
+    project_subgroup = models.ForeignKey(Project_subgroup, null=True,on_delete= models.SET_NULL)
     created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     resolution = models.TextField()
     service = models.ForeignKey(Service, null=True, on_delete= models.SET_NULL)
     hospitals = models.ForeignKey(Hospitals, null=True, on_delete= models.SET_NULL)
     date_entered = models.DateTimeField(auto_now_add=True, null=True)
     update_at = models.DateTimeField()
+    case_pic = models.ImageField(upload_to='case_pic',blank=True)
 
     def __str__(self):
         return str(self.id) + ' : '+ self.name
