@@ -12,13 +12,27 @@ def DashboardPage(request):
     return render(request, 'cases/dashboard.html',context )
 
 def CreateCase(request):
-
+    # user = request.user
     form = CaseForm()
     if request.method == 'POST':
+        # print('Printing POST: ', request.POST)
         form = CaseForm(request.POST)
-        print('Printing POST: ', request.POST )
         if form.is_valid():
-            form.save()
+            # name = request.POST.get("name")
+            # project = request.POST.get("project")
+            # project_subgroup = request.POST.get("project_subgroup")
+            # created_by = request.POST.get("created_by")
+            # resolution = request.POST.get("resolution")
+            # service = request.POST.get("service")
+            # hospitals = request.POST.get("hospitals")
+            # print('Printing POST:')
+            # case_pic = request.POST.get("service")
+            print('Printing POST: ', request.POST)
+            obj = form.save(commit=False)
+            obj.created_by = request.user
+            obj.save()
+            # form.save()
             return redirect('dashboard-page')
+
     context = { 'form': form }
     return render(request, 'cases/case_form.html', context)
