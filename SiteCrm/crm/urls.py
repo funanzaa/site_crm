@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import *
+from . import views
 
 
 urlpatterns = [
-    path('dashboard', DashboardPage , name = 'dashboard-page'),
-    path('create_case', CreateCase , name = 'create_case'),
+    path('dashboard', views.dashboardPage , name = 'dashboard-page'),
+    path('create_case/', views.createCase , name = 'create_case'),
+    path('update_case/<str:pk>', views.updateCase , name = 'update_case'),
 ]

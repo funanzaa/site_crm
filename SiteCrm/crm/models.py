@@ -16,9 +16,14 @@ class Project_subgroup(models.Model):
         return self.name
 
 class Hospitals(models.Model):
-    code = models.CharField(max_length=255)
+    CATEGORY = (
+        ('1','โรงพยาบาล'),
+        ('3','ศูนย์บริการสาธารณสุข'),
+        ('4','คลินิก'),
+    )
+    h_type = models.CharField(max_length=255, choices=CATEGORY)
     label = models.CharField(max_length=255)
-    h_type = models.CharField(max_length=255,null=True)
+    code = models.CharField(max_length=255,null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
@@ -45,8 +50,8 @@ class Case(models.Model):
     resolution = models.TextField()
     service = models.ForeignKey(Service, null=True, on_delete= models.SET_NULL)
     hospitals = models.ForeignKey(Hospitals, null=True, on_delete= models.SET_NULL)
-    date_entered = models.DateTimeField(auto_now_add=True, null=True)
-    update_at = models.DateTimeField(auto_now_add=True, null=True)
+    date_entered = models.DateTimeField(null=True, blank=True)
+    update_at =  models.DateTimeField(null=True, blank=True)
     case_pic = models.ImageField(upload_to='case_pic',blank=True)
 
     def __str__(self):
