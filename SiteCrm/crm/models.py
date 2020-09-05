@@ -57,7 +57,6 @@ class Case(models.Model):
     update_at =  models.DateTimeField(null=True, blank=True)
     case_pic = models.ImageField(upload_to='case_pic',blank=True)
 
-
-
     def __str__(self):
-        return str(self.id) + ' : '+ self.name
+        # return str(self.id) + ' : '+ self.name
+        return self.name

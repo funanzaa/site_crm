@@ -48,3 +48,12 @@ def updateCase(request, pk):
 
     context = { 'form': form }
     return render(request, 'cases/case_form.html', context)
+
+
+def deleteCase(request, pk):
+    case = Case.objects.get(id=pk)
+    if request.method == "POST":
+        case.delete()
+        return redirect('dashboard-page')
+    context = {'case': case}
+    return render(request, 'cases/delete.html', context)
