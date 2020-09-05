@@ -26,6 +26,9 @@ class Hospitals(models.Model):
     code = models.CharField(max_length=255,null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
+    class Meta:
+        unique_together = ('label', 'code')
+
     def __str__(self):
         return self.code + " : " + self.label
 
@@ -53,6 +56,8 @@ class Case(models.Model):
     date_entered = models.DateTimeField(null=True, blank=True)
     update_at =  models.DateTimeField(null=True, blank=True)
     case_pic = models.ImageField(upload_to='case_pic',blank=True)
+
+
 
     def __str__(self):
         return str(self.id) + ' : '+ self.name

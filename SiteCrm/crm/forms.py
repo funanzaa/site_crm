@@ -4,10 +4,12 @@ from .models import *
 
 
 class CaseForm(ModelForm):
+    hospitals = forms.ModelChoiceField(queryset=Hospitals.objects.order_by('label'))
     class Meta():
         model = Case
         fields = ['name','project', 'project_subgroup','resolution','service','hospitals','case_pic','created_by']
         # fields = '__all__'
+
 
     def __init__(self, *args, **kwargs):
         super(CaseForm, self).__init__(*args, **kwargs)
