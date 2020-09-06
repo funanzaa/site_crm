@@ -1,5 +1,7 @@
+import os
 from django.db import models
 from django.contrib.auth.models import User
+
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
@@ -55,8 +57,7 @@ class Case(models.Model):
     hospitals = models.ForeignKey(Hospitals, null=True, on_delete= models.SET_NULL)
     date_entered = models.DateTimeField(null=True, blank=True)
     update_at =  models.DateTimeField(null=True, blank=True)
-    case_pic = models.ImageField(upload_to='case_pic',blank=True)
+    case_pic = models.ImageField(blank=True)
 
     def __str__(self):
-        # return str(self.id) + ' : '+ self.name
         return self.name
