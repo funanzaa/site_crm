@@ -15,6 +15,7 @@ class CaseForm(ModelForm):
         super(CaseForm, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields['created_by'].initial = 1 # default created_by
+            self.fields['name'].widget = forms.TextInput(attrs={"class":"form-control", 'required': False})
             self.fields['created_by'].widget = forms.HiddenInput()
             self.fields['name'].widget = forms.TextInput(attrs={"class":"form-control"})
             self.fields['project'].widget.attrs['class'] = 'form-control'

@@ -29,19 +29,22 @@ def createCase(request):
             obj = form.save(commit=False)
             tz = pytz.timezone('Asia/Bangkok')
             obj.date_entered = datetime.datetime.now(tz=tz)
-            obj.created_by = request.user
-            upload_file = request.FILES['case_pic']
-            fs = FileSystemStorage()
-            name = fs.save(upload_file.name, upload_file)
-            url = fs.url(name)
-            obj.case_pic = url
-            # print(url)
+            try:
+                obj.created_by = request.user
+                upload_file = request.FILES['case_pic']
+                fs = FileSystemStorage()
+                name = fs.save(upload_file.name, upload_file)
+                url = fs.url(name)
+                obj.case_pic = url
             # print(upload_file.name)
             # print(upload_file.size)
-            obj.save()
-            # form.save()
-            return redirect('dashboard-page')
-    context = { 'form': form }
+                obj.save()
+                return redirect('dashboard-page')
+            except:
+                obj.created_by = request.user
+                form.save()
+                return redirect('dashboard-page')
+    context = {'form': form}
     return render(request, 'cases/case_form.html', context)
 
 @login_required(login_url='login')
@@ -54,15 +57,23 @@ def updateCase(request, pk):
         if form.is_valid():
             obj = form.save(commit=False)
             tz = pytz.timezone('Asia/Bangkok')
-            obj.update_at = datetime.datetime.now(tz=tz)
-            upload_file = request.FILES['case_pic']
-            fs = FileSystemStorage()
-            name = fs.save(upload_file.name, upload_file)
-            url = fs.url(name)
-            obj.case_pic = url
-            obj.save()
-            # form.save()
-            return redirect('dashboard-page')
+            try:
+                obj.created_by = request.user
+                obj.update_at = datetime.datetime.now(tz=tz)
+                upload_file = request.FILES['case_pic']
+                fs = FileSystemStorage()
+                name = fs.save(upload_file.name, upload_file)
+                url = fs.url(name)
+                obj.case_pic = url
+            # print(upload_file.name)
+            # print(upload_file.size)
+                obj.save()
+                return redirect('dashboard-page')
+            except:
+                obj.update_at = datetime.datetime.now(tz=tz)
+                obj.created_by = request.user
+                form.save()
+                return redirect('dashboard-page')
 
     context = { 'form': form }
     return render(request, 'cases/case_form.html', context)
