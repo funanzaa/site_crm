@@ -8,7 +8,7 @@ from .forms import *
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from .filters import HositalFilter
 
 @login_required(login_url='login')
 def dashboardPage(request):
@@ -86,3 +86,15 @@ def deleteCase(request, pk):
         return redirect('dashboard-page')
     context = {'case': case}
     return render(request, 'cases/delete.html', context)
+
+@login_required(login_url='login')
+def hospital(request):
+    if request.method == 'POST':
+        data = request.POST.copy()
+        text_find = data.get('text_find')
+        hospital = Hospitals.objects.filter(label__icontains=text_find) | Hospitals.objects.filter(code__icontains=text_find)
+        context = {'hospital': hospital}
+        return render(request, 'cases/hospital.html', context)
+    return render(request, 'cases/hospital.html')
+
+
