@@ -13,6 +13,9 @@ from django.contrib.auth.decorators import login_required
 def HomePage(request):
     return render(request, 'index.html')
 
+def AboutPage(request):
+    return render(request,'about.html')
+
 def loginPage(request):
 
 		if request.method == 'POST':

@@ -22,6 +22,7 @@ from django.conf import settings #  3 set image
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomePage, name="home"),
+    path('about/', views.AboutPage, name="about"),
     path('login/', views.loginPage, name="login"),
     path('logout/', views.logoutUser, name="logout"),
     path('crm/', include('crm.urls')),
