@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django.core import validators
 from django import forms
 from .models import *
 
@@ -34,3 +35,28 @@ class updateCaseForm(ModelForm):
         for field in self.fields:
             self.fields['name'].widget = forms.TextInput(attrs={"class":"form-control"})
             self.fields['resolution'].widget = forms.Textarea(attrs={"class":"form-control"})
+
+
+        
+class hospitalForm(forms.Form):
+    type_choice = (
+        ("1", "โรงพยาบาล"),
+        ("3", "ศูนย์บริการสาธารณสุข"),
+        ("4", "คลินิก"),
+    )
+
+    code = forms.CharField( max_length=5,widget=forms.TextInput(attrs={"class":"form-control",'placeholder': 'code'}))
+    label = forms.CharField(max_length=50, widget=forms.TextInput(attrs={"class":"form-control",'placeholder': 'Label'}))
+    h_type = forms.ChoiceField(label="h_type", choices = type_choice, widget=forms.Select(attrs={"class":"form-control"}))
+
+
+class editHospitalForm(forms.Form):
+    type_choice = (
+        ("1", "โรงพยาบาล"),
+        ("3", "ศูนย์บริการสาธารณสุข"),
+        ("4", "คลินิก"),
+    )
+
+    code = forms.CharField( max_length=5,widget=forms.TextInput(attrs={"class":"form-control",'placeholder': 'code'}))
+    label = forms.CharField(max_length=50, widget=forms.TextInput(attrs={"class":"form-control",'placeholder': 'Label'}))
+    h_type = forms.ChoiceField(label="h_type", choices = type_choice, widget=forms.Select(attrs={"class":"form-control"}))

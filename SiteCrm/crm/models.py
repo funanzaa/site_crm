@@ -26,7 +26,7 @@ class Hospitals(models.Model):
     h_type = models.CharField(max_length=255, choices=CATEGORY)
     label = models.CharField(max_length=255)
     code = models.CharField(max_length=255,null=True)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_created = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         unique_together = ('label', 'code')

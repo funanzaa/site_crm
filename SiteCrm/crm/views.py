@@ -89,12 +89,66 @@ def deleteCase(request, pk):
 
 @login_required(login_url='login')
 def hospital(request):
-    if request.method == 'POST':
-        data = request.POST.copy()
-        text_find = data.get('text_find')
-        hospital = Hospitals.objects.filter(label__icontains=text_find) | Hospitals.objects.filter(code__icontains=text_find)
-        context = {'hospital': hospital}
-        return render(request, 'cases/hospital.html', context)
+    if request.method == 'GET':
+            search_query = request.GET.get('text_find', None)
+            if search_query:
+                hospital = Hospitals.objects.filter(label__icontains=search_query) | Hospitals.objects.filter(code__icontains=search_query)
+                context = {'hospital': hospital}
+                return render(request, 'cases/hospital.html', context)
     return render(request, 'cases/hospital.html')
 
 
+def hospitalAdd(request):
+    form = hospitalForm()
+    if request.method == 'POST':
+        form = hospitalForm(request.POST)
+        if form.is_valid():
+                code = request.POST['code']
+                label = request.POST['label']
+                h_type = request.POST['h_type']
+                hcode = Hospitals.objects.filter(code=code)
+                Label = Hospitals.objects.filter(label=label)
+                if hcode:
+                    messages.info(request, 'This ' + code +' already')
+                elif Label:
+                    messages.info(request, 'This ' + label +' already')
+                else:
+                    newHospital = Hospitals()
+                    newHospital.code = code
+                    newHospital.label = label
+                    newHospital.h_type = h_type
+                    tz = pytz.timezone('Asia/Bangkok')
+                    newHospital.date_created = datetime.datetime.now(tz=tz)                
+                    newHospital.save()
+                    return redirect('hospital-page')
+    context = {'form': form}
+    return render(request, 'cases/hospital_form.html', context)
+
+
+def hospitalEdit(request, pk):
+    hosptial = Hospitals.objects.get(id=pk)
+    form = editHospitalForm()
+    form.fields['code'].initial  = hosptial.code
+    form.fields['label'].initial  = hosptial.label
+    form.fields['h_type'].initial  = hosptial.h_type
+    if request.method == 'POST':
+        form = editHospitalForm(request.POST)
+        if form.is_valid():
+            code = form.cleaned_data["code"]
+            label = form.cleaned_data["label"]
+            h_type = form.cleaned_data["h_type"]
+            hcode = Hospitals.objects.filter(code=code)
+            Label = Hospitals.objects.filter(label=label)
+            if hcode:
+                messages.info(request, 'This ' + code +' already')
+            elif Label:
+                messages.info(request, 'This ' + label +' already')
+            else:
+                newHospital = Hospitals()
+                newHospital.code = code
+                newHospital.label = label
+                newHospital.h_type = h_type
+                newHospital.save()
+                return redirect('hospital-page')
+    context = { 'form': form }
+    return render(request, 'cases/edit_hospital.html', context)
