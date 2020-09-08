@@ -97,7 +97,7 @@ def hospital(request):
                 return render(request, 'cases/hospital.html', context)
     return render(request, 'cases/hospital.html')
 
-
+@login_required(login_url='login')
 def hospitalAdd(request):
     form = hospitalForm()
     if request.method == 'POST':
@@ -124,7 +124,7 @@ def hospitalAdd(request):
     context = {'form': form}
     return render(request, 'cases/hospital_form.html', context)
 
-
+@login_required(login_url='login')
 def hospitalEdit(request, pk):
     hosptial = Hospitals.objects.get(id=pk)
     form = editHospitalForm()
