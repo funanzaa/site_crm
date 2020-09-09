@@ -13,9 +13,14 @@ from .filters import HositalFilter
 @login_required(login_url='login')
 def dashboardPage(request):
     current_user = request.user.id
+    count_case_hos = Case.objects.filter(project_id=1).count()
+    count_project_opbkk = Case.objects.filter(project_id=2).count()     
+    count_project_erefer = Case.objects.filter(project_id=3).count()   
+    count_project_ehhc = Case.objects.filter(project_id=4).count() 
+    count_project_hshv = Case.objects.filter(project_id=5).count() 
+    count_project_smartcard = Case.objects.filter(project_id=6).count() 
     case = Case.objects.filter(created_by=current_user).order_by('-id')[:10]
-
-    context = {'check': 'data_search', "all_case": case}
+    context = {'count_smartcard':count_project_smartcard,'count_hshv':count_project_hshv,'count_ehhc':count_project_ehhc,'count_erefer' : count_project_erefer,'count_opbkk': count_project_opbkk,'count_hos': count_case_hos, "all_case": case}
     return render(request, 'cases/dashboard.html',context )
 
 

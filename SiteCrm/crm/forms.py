@@ -38,7 +38,7 @@ class hospitalAddCaseForm(forms.Form):
     case_image = forms.FileField(label="Case image",widget=forms.FileInput(attrs={"class":"form-control"}),required=False)
 
 class CaseForm(ModelForm):
-    hospitals = forms.ModelChoiceField(queryset=Hospitals.objects.order_by('label')) ## order in from
+    hospitals = forms.ModelChoiceField(queryset=Hospitals.objects.order_by('code')) ## order in from
     class Meta():
         model = Case
         fields = ['name','project', 'project_subgroup','resolution','service','hospitals','case_pic','created_by']
